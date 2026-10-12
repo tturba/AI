@@ -1,0 +1,31 @@
+{
+  "_opis": "Słowa kluczowe dla hooka .claude/hooks/router.py. Dopasowanie od początku wyrazu, bez rozróżniania wielkości liter. Dopisuj własne słowa, gdy router się myli.",
+  "prog": 1.0,
+  "tryby": {
+    "research": {
+      "waga": 1.0,
+      "slowa": ["porównaj", "porównanie", "zbadaj", "research", "źródł", "czy to prawda", "sprawdź, czy", "co wiadomo", "przegląd literatury", "wady i zalety", "alternatyw", "który wybrać", "różnica między", "raport o", "analiza rynku", "fact-check", "zweryfikuj twierdzenie"],
+      "wzorce": []
+    },
+    "osint": {
+      "waga": 1.3,
+      "slowa": ["osint", "rekonesans", "biały wywiad", "whois", "rdap", "subdomen", "certificate transparency", "crt.sh", "co da się ustalić", "namierz", "kto stoi za", "właściciel domeny", "wyciek danych", "footprint", "powierzchnia ataku", "kontrahent", "krs", "profil w mediach"],
+      "wzorce": ["\\bdomen[ayęie]\\s+[a-z0-9-]+\\.[a-z]{2,}", "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b.*(?:kto|czyj|właściciel|asn)"]
+    },
+    "admin": {
+      "waga": 1.0,
+      "slowa": ["serwer", "usług", "systemctl", "journalctl", "log", "nginx", "apache", "docker", "kubernetes", "proxmox", "backup", "kopia zapasowa", "firewall", "zapora", "dns", "dhcp", "vpn", "ssh", "certyfikat", "dysk", "partycj", "uprawnie", "active directory", "gpo", "powershell", "cron", "awari", "nie działa", "nie startuje", "restart", "aktualizacj", "łatk", "konfiguracj", "runbook", "incydent", "monitoring", "zabbix", "wazuh"],
+      "wzorce": ["/etc/\\S+", "/var/log/\\S+"]
+    },
+    "programowanie": {
+      "waga": 1.0,
+      "slowa": ["napisz skrypt", "napisz funkcj", "kod", "bug", "błąd w kodzie", "refaktor", "test jednostkow", "pytest", "commit", "pull request", "merge", "code review", "przegląd kodu", "zaimplementuj", "api", "python", "bash", "javascript", "typescript", "golang", "ansible", "terraform", "dockerfile", "pipeline", "ci/cd", "linter", "regex"],
+      "wzorce": ["\\.(py|sh|ps1|js|ts|go|rs|yml|yaml|tf)\\b"]
+    },
+    "newsy": {
+      "waga": 1.5,
+      "slowa": ["prasówk", "news", "co nowego", "przegląd dnia", "przegląd tygodnia", "wiadomości z", "ostatnie 24", "co się wydarzyło", "nowe podatności", "dzisiejsze", "rss"],
+      "wzorce": []
+    }
+  }
+}

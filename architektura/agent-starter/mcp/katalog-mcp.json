@@ -1,0 +1,89 @@
+{
+  "_opis": "Katalog serwerów MCP przydatnych w pięciu trybach pracy. Wersje sprawdzone w rejestrach npm i PyPI 2026-10-12. Przed instalacją sprawdź aktualną wersję i przypnij ją. Pole 'ryzyko' opisuje, co serwer może zrobić w najgorszym razie.",
+  "serwery": [
+    {
+      "nazwa": "context7",
+      "do_czego": "aktualna dokumentacja bibliotek i narzędzi, zamiast wiedzy modelu z daty treningu",
+      "tryby": ["programowanie", "admin", "research"],
+      "transport": "stdio",
+      "uruchomienie": "npx -y @upstash/context7-mcp@4.3.0",
+      "wersja": "4.3.0",
+      "sekrety": "opcjonalnie CONTEXT7_API_KEY (wyższe limity)",
+      "ryzyko": "niskie: tylko odczyt z zewnętrznej usługi; nazwy bibliotek, o które pytasz, trafiają do dostawcy",
+      "w_paczce": "włączony w .mcp.json i w enabledMcpjsonServers"
+    },
+    {
+      "nazwa": "playwright",
+      "do_czego": "przeglądarka sterowana przez agenta: strony wymagające JavaScript, zrzuty całych stron jako materiał dowodowy",
+      "tryby": ["osint", "research"],
+      "transport": "stdio",
+      "uruchomienie": "npx -y @playwright/mcp@0.0.83 --headless --isolated",
+      "wersja": "0.0.83",
+      "sekrety": "brak",
+      "ryzyko": "wysokie: agent otwiera dowolne strony i czyta niezaufaną treść; w trybie osint odwiedzenie strony celu jest czynnością aktywną",
+      "w_paczce": "zdefiniowany w .mcp.json, domyślnie niewłączony; każde wywołanie wymaga zgody (reguła ask)"
+    },
+    {
+      "nazwa": "fetch",
+      "do_czego": "pobieranie stron jako tekst w narzędziach bez wbudowanego pobierania stron",
+      "tryby": ["research", "newsy"],
+      "transport": "stdio",
+      "uruchomienie": "uvx mcp-server-fetch==2026.10.10",
+      "wersja": "2026.10.10",
+      "sekrety": "brak",
+      "ryzyko": "średnie: pobiera dowolny adres, także wewnętrzny; w Claude Code zbędny, bo istnieje WebFetch z regułami domen",
+      "w_paczce": "tylko w mcp.rozszerzony.przyklad.json"
+    },
+    {
+      "nazwa": "git",
+      "do_czego": "operacje na repozytorium jako narzędzia (status, diff, log, commit) w narzędziach bez dostępu do powłoki",
+      "tryby": ["programowanie"],
+      "transport": "stdio",
+      "uruchomienie": "uvx mcp-server-git==2026.10.10 --repository .",
+      "wersja": "2026.10.10",
+      "sekrety": "brak",
+      "ryzyko": "średnie: może tworzyć commity; w Claude Code zwykle wystarcza polecenie git z regułami uprawnień",
+      "w_paczce": "tylko w mcp.rozszerzony.przyklad.json"
+    },
+    {
+      "nazwa": "time",
+      "do_czego": "bieżący czas i przeliczanie stref, przydatne przy osi czasu z logów w różnych strefach",
+      "tryby": ["admin", "osint"],
+      "transport": "stdio",
+      "uruchomienie": "uvx mcp-server-time==2026.10.10 --local-timezone Europe/Warsaw",
+      "wersja": "2026.10.10",
+      "sekrety": "brak",
+      "ryzyko": "niskie",
+      "w_paczce": "tylko w mcp.rozszerzony.przyklad.json"
+    },
+    {
+      "nazwa": "github",
+      "do_czego": "zgłoszenia, pull requesty, wyszukiwanie kodu i alerty bezpieczeństwa w GitHub",
+      "tryby": ["programowanie", "osint"],
+      "transport": "http",
+      "uruchomienie": "https://api.githubcopilot.com/mcp/ z nagłówkiem Authorization: Bearer ${GITHUB_PAT}",
+      "wersja": "usługa zdalna, bez numeru wersji po stronie klienta",
+      "sekrety": "GITHUB_PAT: token o najwęższym możliwym zakresie, najlepiej tylko do odczytu i tylko do wybranych repozytoriów",
+      "ryzyko": "wysokie: z tokenem do zapisu agent może komentować, tworzyć i scalać; treść zgłoszeń od obcych osób to niezaufane dane",
+      "w_paczce": "tylko w mcp.rozszerzony.przyklad.json"
+    },
+    {
+      "nazwa": "brave-search",
+      "do_czego": "wyszukiwarka dla narzędzi bez wbudowanego wyszukiwania w sieci",
+      "tryby": ["research", "osint", "newsy"],
+      "transport": "stdio",
+      "uruchomienie": "npx -y @brave/brave-search-mcp-server@2.1.4",
+      "wersja": "2.1.4",
+      "sekrety": "BRAVE_API_KEY",
+      "ryzyko": "średnie: zapytania trafiają do dostawcy, wyniki to niezaufana treść",
+      "w_paczce": "tylko w mcp.rozszerzony.przyklad.json"
+    }
+  ],
+  "zasady_wyboru": [
+    "Każdy serwer MCP to cudzy kod z twoimi uprawnieniami oraz opisy narzędzi, które trafiają do kontekstu modelu.",
+    "Najpierw sprawdź, czy tego samego nie robi narzędzie wbudowane albo jedno polecenie w powłoce.",
+    "Przypinaj wersję. Zapis bez wersji oznacza, że przy każdym starcie pobierasz to, co akurat jest w rejestrze.",
+    "Włączaj tylko serwery potrzebne w bieżącej pracy. Reszta zostaje w pliku przykładowym.",
+    "Token dla serwera ma mieć najwęższy zakres i osobną tożsamość, nie twoje konto administratora."
+  ]
+}

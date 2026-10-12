@@ -1,0 +1,23 @@
+{
+  "_opis": "Źródła dla skilla prasowka. Pola: nazwa, url, typ (rss albo kev), kategoria, jezyk, wlaczone. Adresy sprawdzone 2026-10-12. Dopisz własne (producent sprzętu, dystrybucja, CSIRT sektorowy) i wyłącz zbędne.",
+  "okno_godzin": 24,
+  "limit_na_zrodlo": 15,
+  "zrodla": [
+    {"nazwa": "CERT Polska", "url": "https://cert.pl/rss.xml", "typ": "rss", "kategoria": "bezpieczeństwo PL", "jezyk": "pl", "wlaczone": true},
+    {"nazwa": "Sekurak", "url": "https://sekurak.pl/feed/", "typ": "rss", "kategoria": "bezpieczeństwo PL", "jezyk": "pl", "wlaczone": true},
+    {"nazwa": "Niebezpiecznik", "url": "https://niebezpiecznik.pl/feed/", "typ": "rss", "kategoria": "bezpieczeństwo PL", "jezyk": "pl", "wlaczone": true},
+    {"nazwa": "Zaufana Trzecia Strona", "url": "https://zaufanatrzeciastrona.pl/feed/", "typ": "rss", "kategoria": "bezpieczeństwo PL", "jezyk": "pl", "wlaczone": true},
+    {"nazwa": "CISA KEV", "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json", "typ": "kev", "kategoria": "podatności wykorzystywane", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "SANS Internet Storm Center", "url": "https://isc.sans.edu/rssfeed.xml", "typ": "rss", "kategoria": "bezpieczeństwo", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "BleepingComputer", "url": "https://www.bleepingcomputer.com/feed/", "typ": "rss", "kategoria": "bezpieczeństwo", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "The Hacker News", "url": "https://feeds.feedburner.com/TheHackersNews", "typ": "rss", "kategoria": "bezpieczeństwo", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "Krebs on Security", "url": "https://krebsonsecurity.com/feed/", "typ": "rss", "kategoria": "bezpieczeństwo", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "Schneier on Security", "url": "https://www.schneier.com/feed/atom/", "typ": "rss", "kategoria": "bezpieczeństwo", "jezyk": "en", "wlaczone": false},
+    {"nazwa": "The Register Security", "url": "https://www.theregister.com/security/headlines.atom", "typ": "rss", "kategoria": "bezpieczeństwo", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "LWN", "url": "https://lwn.net/headlines/rss", "typ": "rss", "kategoria": "Linux", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "Simon Willison", "url": "https://simonwillison.net/atom/everything/", "typ": "rss", "kategoria": "AI", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "OpenAI News", "url": "https://openai.com/news/rss.xml", "typ": "rss", "kategoria": "AI", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "typ": "rss", "kategoria": "AI", "jezyk": "en", "wlaczone": true},
+    {"nazwa": "Google AI Blog", "url": "https://blog.google/technology/ai/rss/", "typ": "rss", "kategoria": "AI", "jezyk": "en", "wlaczone": true}
+  ]
+}

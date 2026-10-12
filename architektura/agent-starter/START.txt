@@ -1,0 +1,53 @@
+START W 5 MINUT
+===============
+
+WYMAGANIA
+  - Claude Code 2.1.277 lub nowszy (claude --version). Starsze wersje też zadziałają,
+    bo CLAUDE.md importuje AGENTS.md jawnie.
+  - python3 (hooki i skrypty używają tylko biblioteki standardowej)
+  - opcjonalnie: dig (dnsutils), shellcheck, node i npx (serwery MCP), uv (uvx)
+
+KROKI
+  1. Rozpakuj paczkę do pustego katalogu roboczego i wejdź do niego:
+       unzip agent-starter.zip && cd agent-starter
+     Chcesz dołożyć paczkę do istniejącego projektu? Skopiuj katalogi .claude, tryby,
+     pamiec, konfig oraz pliki CLAUDE.md, AGENTS.md, .mcp.json. Jeśli projekt ma już
+     własny CLAUDE.md, dopisz do niego treść routera zamiast go nadpisywać.
+
+  2. Przeczytaj, zanim uruchomisz. To cudza konfiguracja agenta, czyli dokładnie ten
+     rodzaj pliku, którego nie instaluje się na ślepo:
+       .claude/settings.json      co agent może, o co pyta, czego nie może
+       .claude/hooks/*.py         cztery krótkie programy uruchamiane przez harness
+       .mcp.json                  jakie serwery MCP zostaną uruchomione
+
+  3. Uzupełnij pola w nawiasach <> w AGENTS.md (rola, środowisko).
+
+  4. Uruchom:
+       claude
+     Przy pierwszym starcie Claude Code zapyta o zaufanie do katalogu i o serwer MCP
+     context7. Bez node i npx odrzuć serwer, reszta paczki działa bez niego.
+
+  5. Sprawdź, że wszystko się załadowało:
+       /memory     powinny być widoczne CLAUDE.md, AGENTS.md, pamiec/MEMORY.md
+       /hooks      cztery hooki: SessionStart, UserPromptSubmit, PreToolUse, PostToolUse
+       /mcp        serwer context7
+       /doctor     brak błędów w plikach ustawień
+
+  6. Wklej trzy prompty z sciagi/prompty-testowe.txt (na przykład 1, 7 i 20).
+     Agent powinien zacząć od linii "Tryb: ..." i odmówić pokazania pliku .env.
+
+CO DALEJ
+  - README.md                                 mapa paczki i sposób dostosowania
+  - sciagi/sciaga-claude-code.txt             polecenia i składnia reguł
+  - sciagi/lista-kontrolna-bezpieczenstwa.txt zanim użyjesz agenta w pracy
+  - pamiec/README.md                          warstwy pamięci
+  - mcp/README.md                             jak dodać i ocenić serwer MCP
+
+GDY COŚ NIE DZIAŁA
+  - Hook zgłasza błąd "python3: not found": zainstaluj python3 albo zmień polecenie
+    w .claude/settings.json na python.
+  - Agent nie zaczyna od linii "Tryb:": sprawdź /memory, czy CLAUDE.md jest wczytany
+    i czy uruchomiłeś claude w katalogu paczki.
+  - Hook straz.py blokuje poprawne polecenie: popraw wzorzec w pliku hooka. Agent ma
+    zakaz edycji hooków, więc zrobisz to sam w edytorze.
+  - Windows bez WSL: hooki w Pythonie działają, skrypty .sh wymagają Git Bash albo WSL.

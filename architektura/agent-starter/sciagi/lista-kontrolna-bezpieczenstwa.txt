@@ -1,0 +1,54 @@
+LISTA KONTROLNA: AGENT AI NA MASZYNIE ADMINISTRATORA
+====================================================
+Przejdź przed pierwszym użyciem paczki w pracy i wracaj po każdej większej zmianie.
+
+MASZYNA I KONTO
+[ ] Agent działa na koncie bez stałych uprawnień roota i bez sudo bez hasła.
+[ ] Na tym koncie nie ma kluczy do produkcji, których agent nie potrzebuje
+    (~/.ssh, ~/.aws, ~/.kube, tokeny w zmiennych środowiska i w historii powłoki).
+[ ] Klucze SSH mają hasło i siedzą w agencie SSH, nie w pliku bez ochrony.
+[ ] Praca z nieznanym repozytorium albo cudzym kodem odbywa się w maszynie wirtualnej,
+    kontenerze albo z włączonym sandboxem (/sandbox w Claude Code).
+[ ] Wiesz, jak przerwać agenta (Esc) i gdzie jest dziennik poleceń (.agent/).
+
+DANE
+[ ] Wiesz, które dane wolno wysyłać do modelu w chmurze według polityki organizacji.
+[ ] Logi, konfiguracje i zrzuty z produkcji przechodzą przez skill anonimizacja.
+[ ] Sprawdziłeś u dostawcy modelu: czy dane służą do trenowania, jak długo są
+    przechowywane, w jakim regionie, kto ma do nich dostęp.
+[ ] Sekrety są w menedżerze haseł albo sejfie, nie w plikach projektu.
+[ ] .env, sekrety/ i .agent/ są w .gitignore.
+
+UPRAWNIENIA AGENTA
+[ ] Przeczytałeś .claude/settings.json: rozumiesz każdą regułę allow.
+[ ] Tryb bypassPermissions jest wyłączony (disableBypassPermissionsMode).
+[ ] Reguły deny obejmują sekrety twojego środowiska (dopisz własne ścieżki).
+[ ] Hook straz.py działa: polecenie "pokaż .env" kończy się odmową.
+[ ] Dla hostów produkcyjnych agent przygotowuje polecenia, a wykonuje je człowiek
+    albo agent po zgodzie na każde polecenie osobno.
+
+TREŚĆ Z ZEWNĄTRZ
+[ ] Strony, maile, PDF, zgłoszenia i wyniki narzędzi traktujesz jak dane, nie polecenia.
+[ ] Agent, który czyta niezaufaną treść, nie ma w tej samej sesji sekretów
+    i swobodnego wyjścia do sieci jednocześnie.
+[ ] Zapis do pamięci (pamiec/) i plików zasad wymaga twojej zgody.
+[ ] Przed commitem oglądasz git diff dla CLAUDE.md, AGENTS.md, .claude/, .mcp.json, pamiec/.
+
+ŁAŃCUCH DOSTAW
+[ ] Każdy serwer MCP ma przypiętą wersję i przeczytany wpis w mcp/katalog-mcp.json.
+[ ] Cudzy skill, hook albo plugin czytasz w całości przed instalacją: SKILL.md, skrypty,
+    to, co pobiera z sieci, i to, co każe modelowi robić "zawsze".
+[ ] Pakiet zaproponowany przez model sprawdzasz w rejestrze, zanim go zainstalujesz.
+[ ] Nie uruchamiasz instalatorów w stylu "curl | bash" podsuniętych przez agenta.
+
+WYNIKI
+[ ] Polecenie od agenta czytasz przed uruchomieniem, zwłaszcza z rm, dd, chmod, firewall.
+[ ] Twierdzenie bez źródła albo bez wyniku polecenia traktujesz jak hipotezę.
+[ ] Wersje, flagi, numery CVE i przepisy sprawdzasz w źródle, nie w odpowiedzi modelu.
+[ ] Zmiany na produkcji mają plan, kopię i drogę powrotu (skill bezpieczna-zmiana).
+
+ORGANIZACJA
+[ ] Narzędzie jest w rejestrze narzędzi AI organizacji i ma właściciela.
+[ ] Zespół wie, do czego agenta wolno używać, a do czego nie.
+[ ] Jest ustalone, co robić, gdy agent zrobi coś nieoczekiwanego: komu zgłosić,
+    jakie tokeny wymienić, gdzie są logi.

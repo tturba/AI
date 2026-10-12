@@ -1,0 +1,38 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@4.3.0"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@0.0.83", "--headless", "--isolated", "--output-dir", "${CLAUDE_PROJECT_DIR:-.}/wyniki/osint/zrzuty"]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch==2026.10.10"]
+    },
+    "git": {
+      "command": "uvx",
+      "args": ["mcp-server-git==2026.10.10", "--repository", "${CLAUDE_PROJECT_DIR:-.}"]
+    },
+    "time": {
+      "command": "uvx",
+      "args": ["mcp-server-time==2026.10.10", "--local-timezone", "Europe/Warsaw"]
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PAT}"
+      }
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": ["-y", "@brave/brave-search-mcp-server@2.1.4"],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    }
+  }
+}

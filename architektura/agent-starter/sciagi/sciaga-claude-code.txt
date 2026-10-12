@@ -1,0 +1,76 @@
+ŚCIĄGA: CLAUDE CODE I TA PACZKA
+===============================
+Stan na 2026-10 (Claude Code 2.1.x). Polecenia zmieniają się między wersjami:
+pełną listę w sesji pokazuje /help, a z powłoki claude --help.
+
+START
+  claude                          sesja interaktywna w bieżącym katalogu
+  claude "pytanie"                sesja z pierwszą wiadomością
+  claude -p "zadanie"             jedno zadanie bez okna rozmowy (skrypty, cron)
+  claude -c                       kontynuuj ostatnią rozmowę z tego katalogu
+  claude -r                       wybierz wcześniejszą rozmowę
+  claude --permission-mode plan   start w trybie planu (tylko odczyt i plan)
+  claude --add-dir ../inny        dołącz dodatkowy katalog do sesji
+  claude doctor                   kontrola instalacji i plików ustawień
+  claude mcp list                 serwery MCP i ich stan
+
+W SESJI
+  /help            lista poleceń            /memory     pliki pamięci i auto memory
+  /context         co zajmuje kontekst      /mcp        serwery MCP i ich narzędzia
+  /compact         streść i zwolnij kontekst /agents     subagenci
+  /clear           nowa rozmowa             /permissions reguły uprawnień
+  /hooks           aktywne hooki            /config     ustawienia
+  /model           wybór modelu             /doctor     diagnostyka konfiguracji
+  /<nazwa-skilla>  ręczne wywołanie skilla, np. /prasowka 48
+  @plik            dołącz plik do wiadomości
+  !polecenie       uruchom polecenie powłoki, wynik trafia do rozmowy
+  Shift+Tab        przełącz tryb uprawnień (zwykły, akceptuj edycje, plan)
+  Esc              przerwij agenta         /rewind    cofnij rozmowę albo zmiany w plikach
+
+GDZIE CO LEŻY W TEJ PACZCE
+  CLAUDE.md                  router: wybór trybu pracy
+  AGENTS.md                  zasady wspólne, czytane też przez inne narzędzia
+  tryby/*.md                 sposób pracy w pięciu trybach, czytane na żądanie
+  .claude/settings.json      uprawnienia (allow, ask, deny), hooki, lista serwerów MCP
+  .claude/hooks/             straz.py, router.py, start_sesji.py, dziennik.py
+  .claude/skills/            15 procedur, każda w katalogu z plikiem SKILL.md
+  .claude/agents/            4 subagentów z osobnym kontekstem
+  .claude/rules/             reguły ładowane tylko dla pasujących plików
+  .mcp.json                  serwery MCP projektu
+  pamiec/                    pamięć projektu: indeks MEMORY.md i wpisy
+  konfig/                    słowa kluczowe routera, źródła newsów
+  wyniki/                    raporty, prasówki, sprawy OSINT, zapisy zmian
+  .agent/                    stan zadania, dziennik poleceń, mapa maskowania (poza git)
+
+KOLEJNOŚĆ WAŻNOŚCI USTAWIEŃ (od najwyższej)
+  1. ustawienia zarządzane przez organizację
+  2. argumenty wiersza poleceń (claude --settings)
+  3. .claude/settings.local.json      osobiste, dla projektu, poza repozytorium
+  4. .claude/settings.json            wspólne dla projektu
+  5. ~/.claude/settings.json          osobiste, dla wszystkich projektów
+  Reguły uprawnień: deny wygrywa z ask, ask wygrywa z allow, niezależnie od pliku.
+
+SKŁADNIA REGUŁ UPRAWNIEŃ
+  Bash(git status *)            polecenie zaczynające się od "git status"
+  Read(.env)                    plik .env na dowolnej głębokości w projekcie
+  Read(~/.ssh/**)               ścieżka od katalogu domowego
+  Edit(/wyniki/**)              ścieżka od katalogu projektu
+  Read(//etc/shadow)            ścieżka bezwzględna (dwa ukośniki)
+  WebFetch(domain:cert.pl)      pobieranie z jednej domeny
+  mcp__context7__*              wszystkie narzędzia jednego serwera MCP
+  Reguła Bash dopasowuje tekst polecenia, więc nie jest granicą bezpieczeństwa:
+  "Bash(curl *)" nie złapie /usr/bin/curl ani sh -c 'curl ...'. Od tego jest sandbox.
+
+HOOKI W DWÓCH ZDANIACH
+  Hook to twój program uruchamiany przez harness przy zdarzeniu (SessionStart,
+  UserPromptSubmit, PreToolUse, PostToolUse, Stop i inne). Dostaje JSON na stdin;
+  kod wyjścia 2 blokuje akcję, a JSON na stdout może zwrócić decyzję albo kontekst.
+  CLAUDE.md to prośba do modelu. Hook i reguła deny to wymuszenie.
+
+DOBRE NAWYKI
+  - Jedno zadanie, jedna sesja. Między zadaniami /clear.
+  - Zanim agent zacznie zmieniać: tryb planu i przeczytanie planu.
+  - Długie wyjście do pliku, do rozmowy tylko fragment.
+  - /context, gdy odpowiedzi robią się gorsze: zwykle kontekst jest pełny.
+  - Każdą odmowę hooka czytaj. Jeśli jest fałszywa, popraw wzorzec, nie wyłączaj hooka.
+  - Zmiany w .claude/, .mcp.json i pamiec/ przeglądaj w git diff jak kod.
