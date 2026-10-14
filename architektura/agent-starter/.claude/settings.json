@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "default",
+    "disableBypassPermissionsMode": "disable",
+    "allow": [
+      "Edit(/wyniki/**)",
+      "Edit(/.agent/**)",
+      "Bash(dig *)",
+      "Bash(whois *)",
+      "Bash(shellcheck *)",
+      "Bash(python3 -m py_compile *)",
+      "Bash(bash -n *)",
+      "WebSearch",
+      "WebFetch(domain:rdap.org)",
+      "WebFetch(domain:crt.sh)",
+      "WebFetch(domain:nvd.nist.gov)",
+      "WebFetch(domain:www.cve.org)",
+      "WebFetch(domain:cert.pl)",
+      "mcp__context7__*"
+    ],
+    "ask": [
+      "Edit(/pamiec/**)",
+      "Edit(/AGENTS.md)",
+      "Edit(/CLAUDE.md)",
+      "Edit(/tryby/**)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(sudo *)",
+      "Bash(ssh *)",
+      "Bash(scp *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(pip install *)",
+      "Bash(npm install *)",
+      "mcp__playwright__*"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(sekrety/**)",
+      "Read(**/*.key)",
+      "Read(**/*.pfx)",
+      "Read(**/*.p12)",
+      "Read(**/*.kdbx)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.kube/**)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.netrc)",
+      "Read(~/.bash_history)",
+      "Read(~/.zsh_history)",
+      "Edit(/.claude/hooks/**)",
+      "Edit(/konfig/router.json)"
+    ]
+  },
+  "enableAllProjectMcpServers": false,
+  "enabledMcpjsonServers": ["context7"],
+  "env": {
+    "MAX_MCP_OUTPUT_TOKENS": "15000"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PROJECT_DIR}/.claude/hooks/start_sesji.py\"", "timeout": 5 }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PROJECT_DIR}/.claude/hooks/router.py\"", "timeout": 5 }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Read|Edit|Write|Grep|Glob|WebFetch",
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PROJECT_DIR}/.claude/hooks/straz.py\"", "timeout": 5 }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PROJECT_DIR}/.claude/hooks/dziennik.py\"", "timeout": 5 }
+        ]
+      }
+    ]
+  }
+}

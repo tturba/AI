@@ -1,0 +1,16 @@
+{
+  "_opis": "Skopiuj jako .claude/settings.local.json. Plik osobisty, poza repozytorium. Ma pierwszeństwo przed settings.json, ale reguły deny z obu plików obowiązują zawsze.",
+  "permissions": {
+    "allow": [
+      "Bash(git commit *)",
+      "WebFetch(domain:docs.example.com)"
+    ],
+    "additionalDirectories": [
+      "~/notatki-admina"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "context7",
+    "playwright"
+  ]
+}

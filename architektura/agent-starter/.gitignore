@@ -1,0 +1,19 @@
+# sekrety i ustawienia osobiste
+.env
+.env.*
+sekrety/
+CLAUDE.local.md
+.claude/settings.local.json
+
+# stan roboczy agenta: dziennik poleceń, stan zadania, mapa maskowania
+.agent/
+
+# pamięć subagentów zapisywana lokalnie
+.claude/agent-memory-local/
+
+# materiał zebrany w sprawach OSINT może zawierać dane osobowe: decyzja o wersjonowaniu należy do ciebie
+wyniki/osint/*/dowody/
+wyniki/osint/zrzuty/
+
+__pycache__/
+*.pyc

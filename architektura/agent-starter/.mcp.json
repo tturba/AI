@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@4.3.0"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@0.0.83",
+        "--headless",
+        "--isolated",
+        "--output-dir",
+        "${CLAUDE_PROJECT_DIR:-.}/wyniki/osint/zrzuty"
+      ]
+    }
+  }
+}
